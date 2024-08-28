@@ -1,5 +1,7 @@
 # withub_llm
 
+![1_w32TC1K6iXzhC3zoghplEA](https://github.com/user-attachments/assets/ed5ec027-1e2d-49d1-8178-27c0b720340b)
+
 ## 激活函数Activation
 
 激活函数在神经网络中扮演着至关重要的角色，它们是神经网络能够学习和模拟复杂函数的关键因素之一。以下是激活函数的一些重要性：
@@ -132,6 +134,89 @@ $$
 
 - **优点**: 促进网络的自归一化，使得深度网络更加稳定。
 - **缺点**: 对参数初始化和输入标准化有较高要求。
+
+是的，存在一种结合了 `x` 和 `tanh` 函数的激活函数，叫做 **Scaled Tanh** 或者 **Scaled Hyperbolic Tangent**。这个激活函数的形式如下：
+
+$$
+\text{Scaled Tanh}(x) = x \cdot \tanh(x)
+$$
+
+### 数学表达式
+
+$$
+f(x) = x \cdot \tanh(x)
+$$
+
+其中 $\tanh(x)$ 是双曲正切函数，其表达式为：
+
+$$
+\tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}}
+$$
+
+### 性质和应用
+
+- **平滑性**: 与标准的 ReLU 激活函数相比，`x \cdot \tanh(x)` 在原点及其附近更加平滑，这意味着梯度不会像 ReLU 那样在某些点出现突然的变化。
+- **非线性**: 它引入了非线性，并且与标准的 `tanh(x)` 不同，它可以使输出范围扩展到更大的正负值。
+- **梯度消失和梯度爆炸**: 因为它结合了线性和非线性部分，所以它可以在一定程度上缓解梯度消失的问题，但在某些情况下也可能导致梯度爆炸。
+
+### 实现
+
+在 PyTorch 中，可以使用以下代码实现该激活函数：
+
+```python
+import torch
+
+def scaled_tanh(x):
+    return x * torch.tanh(x)
+
+# 示例
+x = torch.tensor([1.0, -1.0, 0.0, 2.0, -2.0])
+output = scaled_tanh(x)
+print(output)
+```
+
+### 应用场景
+
+`x \cdot \tanh(x)` 激活函数通常用于需要平滑非线性函数且不希望使用硬性门限（如 ReLU）的情况下。在某些深度学习模型中，如语言模型或其他复杂网络结构中，这种激活函数可以提供更好的性能。
+
+是的，存在一种结合了 $x$ 和 $\sin(x)$ 的激活函数，称为 **Sine ReLU (SiLU)** 或者更一般的 **Sinusoidal Activation**。这种激活函数的形式如下：
+
+$$
+\text{Sinusoidal Activation}(x) = x \cdot \sin(x)
+$$
+
+### 数学表达式
+
+$$
+f(x) = x \cdot \sin(x)
+$$
+
+### 性质和应用
+
+- **平滑性**: `x \cdot \sin(x)` 函数是平滑的，并且在所有点都具有导数。
+- **周期性**: 由于包含了正弦函数，该激活函数是周期性的。这意味着它在较大范围内的输出值会有周期性波动。
+- **非线性**: 它引入了非线性，可以用于某些需要复杂非线性映射的场景。
+- **梯度**: 该函数的导数为 $1 \cdot \sin(x) + x \cdot \cos(x)$，这意味着它在训练过程中具有良好的梯度流动性质。
+
+### 实现
+
+在 PyTorch 中，可以使用以下代码实现该激活函数：
+
+```python
+import torch
+
+def sin_activation(x):
+    return x * torch.sin(x)
+
+# 示例
+x = torch.tensor([1.0, -1.0, 0.0, 2.0, -2.0])
+output = sin_activation(x)
+print(output)
+```
+
+### 应用场景
+
+`x \cdot \sin(x)` 激活函数在一些特定的深度学习模型中有应用，尤其是在一些需要更复杂和周期性行为的函数映射中。例如，在处理某些物理模拟、波动传播或周期性信号建模的任务时，这种激活函数可能具有优势。
 
 ### 总结
 
