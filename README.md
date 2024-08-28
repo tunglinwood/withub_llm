@@ -22,74 +22,120 @@
 
 9. **模型泛化能力**：激活函数的选择也会影响到模型的泛化能力，即模型在未见过的数据上的表现。
 
-选择合适的激活函数对于构建有效的神经网络模型至关重要，需要根据具体问题和数据特性来决定。
 
-以下是一些常见的激活函数及其数学公式：
+在神经网络中，激活函数（Activation Function）是用于引入非线性特性的重要组件，它可以帮助网络学习和表示复杂的函数。常见的激活函数及其数学公式如下：
 
-1. **Sigmoid**:
+### 1. Sigmoid 函数
 
-   $$ \sigma(x) = \frac{1}{1 + e^{-x}} $$
-   
-   Sigmoid函数将输入压缩到0和1之间，通常用于二分类问题。
+Sigmoid 函数将输入映射到 $(0, 1)$ 的范围内，常用于二分类任务的输出层。
 
-2. **Tanh (Hyperbolic Tangent)**:
+$$
+\sigma(x) = \frac{1}{1 + e^{-x}}
+$$
 
-   $$ \tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}} $$
+- **优点**: 适用于概率输出。
+- **缺点**: 容易导致梯度消失问题，且输出不以零为中心。
 
-   双曲正切函数将输入压缩到-1和1之间。
+### 2. Tanh 函数
 
-3. **ReLU (Rectified Linear Unit)**:
+Tanh（双曲正切）函数是 Sigmoid 的变形，将输入映射到 $(-1, 1)$ 的范围内。
 
-   $$ \text{ReLU}(x) = \max(0, x) $$
-   
-   当输入大于0时输出输入值，否则输出0。ReLU函数在训练深度神经网络时非常流行，因为它解决了梯度消失问题。
+$$
+\text{tanh}(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}} = 2\sigma(2x) - 1
+$$
 
-4. **Leaky ReLU**:
-   
-   $$ \text{Leaky ReLU}(x) = \max(\alpha x, x) $$
-   
-   当输入小于0时，允许一个小的梯度（由α控制）。
+- **优点**: 输出以零为中心，梯度较 Sigmoid 更大。
+- **缺点**: 仍然可能导致梯度消失。
 
-5. **Parametric ReLU (PReLU)**:
-   
-   $$ \text{PReLU}(x) = \max(\alpha x, x) $$
-   
-   与Leaky ReLU类似，但α是可学习的参数。
+### 3. ReLU（Rectified Linear Unit）
 
-6. **ELU (Exponential Linear Unit)**:
-    
-   $$ \text{ELU}(x) = \begin{cases} 
-      x & \text{if } x > 0 \\
-      \alpha(e^x - 1) & \text{if } x \leq 0 
-   \end{cases} $$
-   
-   ELU在负值区域有一个非零的梯度，有助于缓解神经元死亡问题。
+ReLU 是目前使用最广泛的激活函数，它只保留正数部分，将负数部分设为零。
 
-7. **SELU (Scaled Exponential Linear Unit)**:
-   
-   $$ \text{SELU}(x) = \lambda \begin{cases} 
-      x & \text{if } x > 0 \\
-      \alpha(e^x - 1) & \text{if } x \leq 0 
-   \end{cases} $$
-   
-   自归一化激活函数，具有自归一化属性，通常用作网络的第一层激活函数。
+$$
+\text{ReLU}(x) = \max(0, x)
+$$
 
-9. **Softmax**:
-    
-   $$ \text{Softmax}(\mathbf{x}_i) = \frac{e^{x_i}}{\sum_{j} e^{x_j}} $$
-   
-   用于多分类问题，将一个向量转换为概率分布。
+- **优点**: 计算简单，能够有效缓解梯度消失问题。
+- **缺点**: 可能导致“死亡ReLU”问题，即神经元在训练过程中可能永远不会激活。
 
-10. **Swish**:
-    
-   $$ \text{Swish}(x) = x \cdot \sigma(\beta x) $$
-   
-   一种自门控的激活函数，其中β是可学习的参数。
+### 4. Leaky ReLU
 
-11. **GELU (Gaussian Error Linear Unit)**:
-    
-    $$ [ \text{GELU}(x) = x \Phi(x) $$
-    
-    其中Φ是标准正态分布的累积分布函数。
+Leaky ReLU 是 ReLU 的改进版，允许负数部分以一个小斜率通过，以解决死亡ReLU问题。
+
+$$
+\text{Leaky ReLU}(x) = \max(\alpha x, x)
+$$
+
+其中 $\alpha$ 是一个很小的常数（如 0.01）。
+
+- **优点**: 减少死亡ReLU的风险。
+- **缺点**: 增加了计算复杂度。
+
+### 5. Parametric ReLU (PReLU)
+
+PReLU 是 Leaky ReLU 的扩展版本，其中斜率 $\alpha$ 作为参数进行学习。
+
+$$
+\text{PReLU}(x) = \max(\alpha x, x)
+$$
+
+- **优点**: 更加灵活，适应不同数据分布。
+- **缺点**: 增加了模型的复杂性。
+
+### 6. Softmax 函数
+
+Softmax 函数通常用于多分类任务的输出层，将输入向量转换为概率分布。
+
+$$
+\text{Softmax}(x_i) = \frac{e^{x_i}}{\sum_{j} e^{x_j}}
+$$
+
+- **优点**: 输出概率分布，适合多分类任务。
+- **缺点**: 可能导致计算复杂度较高。
+
+### 7. Swish 函数
+
+Swish 是一种新型激活函数，近年来在某些任务上表现出优于 ReLU 的性能。
+
+$$
+\text{Swish}(x) = x \cdot \sigma(x) = \frac{x}{1 + e^{-x}}
+$$
+
+- **优点**: 平滑的曲线，能带来更好的性能。
+- **缺点**: 计算上稍复杂。
+
+### 8. GELU（Gaussian Error Linear Unit）
+
+GELU 是基于高斯分布的激活函数，在某些深度学习任务中表现优异。
+
+$$
+\text{GELU}(x) = x \cdot \Phi(x)
+$$
+
+其中 $\Phi(x)$ 是标准正态分布的累积分布函数。
+
+- **优点**: 自然的高斯分布，更适合现代深度网络。
+- **缺点**: 计算复杂度高。
+
+### 9. SELU（Scaled Exponential Linear Unit）
+
+SELU 是一种自正归一化激活函数，能够在深层网络中保持激活值的稳定性。
+
+$$
+\text{SELU}(x) = \lambda \begin{cases} 
+x & \text{if } x > 0 \\
+\alpha(e^x - 1) & \text{if } x \leq 0
+\end{cases}
+$$
+
+其中 $\lambda$ 和 $\alpha$ 是特定的常数。
+
+- **优点**: 促进网络的自归一化，使得深度网络更加稳定。
+- **缺点**: 对参数初始化和输入标准化有较高要求。
+
+### 总结
+
+不同的激活函数有不同的优缺点，在实际应用中，选择合适的激活函数对于神经网络的性能至关重要。ReLU 及其变种如 Leaky ReLU 和 PReLU 常用于隐藏层，而 Sigmoid、Tanh 和 Softmax 等则多用于输出层。新型激活函数如 Swish、GELU 和 SELU 也越来越受到关注，在特定任务中显示出优势。
+
 
 
