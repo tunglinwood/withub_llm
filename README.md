@@ -27,49 +27,49 @@
 以下是一些常见的激活函数及其数学公式：
 
 1. **Sigmoid**:
-   \[ \sigma(x) = \frac{1}{1 + e^{-x}} \]
+   $$ \sigma(x) = \frac{1}{1 + e^{-x}} $$
    Sigmoid函数将输入压缩到0和1之间，通常用于二分类问题。
 
 2. **Tanh (Hyperbolic Tangent)**:
-   \[ \tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}} \]
+   $$ \tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}} $$
    双曲正切函数将输入压缩到-1和1之间。
 
 3. **ReLU (Rectified Linear Unit)**:
-   \[ \text{ReLU}(x) = \max(0, x) \]
+   $$ \text{ReLU}(x) = \max(0, x) $$
    当输入大于0时输出输入值，否则输出0。ReLU函数在训练深度神经网络时非常流行，因为它解决了梯度消失问题。
 
 4. **Leaky ReLU**:
-   \[ \text{Leaky ReLU}(x) = \max(\alpha x, x) \]
+   $$ \text{Leaky ReLU}(x) = \max(\alpha x, x) $$
    当输入小于0时，允许一个小的梯度（由α控制）。
 
 5. **Parametric ReLU (PReLU)**:
-   \[ \text{PReLU}(x) = \max(\alpha x, x) \]
+   $$ \text{PReLU}(x) = \max(\alpha x, x) $$
    与Leaky ReLU类似，但α是可学习的参数。
 
 6. **ELU (Exponential Linear Unit)**:
-   \[ \text{ELU}(x) = \begin{cases} 
+   $$ \text{ELU}(x) = \begin{cases} 
       x & \text{if } x > 0 \\
       \alpha(e^x - 1) & \text{if } x \leq 0 
-   \end{cases} \]
+   \end{cases} $$
    ELU在负值区域有一个非零的梯度，有助于缓解神经元死亡问题。
 
 7. **SELU (Scaled Exponential Linear Unit)**:
-   \[ \text{SELU}(x) = \lambda \begin{cases} 
+   $$ \text{SELU}(x) = \lambda \begin{cases} 
       x & \text{if } x > 0 \\
       \alpha(e^x - 1) & \text{if } x \leq 0 
-   \end{cases} \]
+   \end{cases} $$
    自归一化激活函数，具有自归一化属性，通常用作网络的第一层激活函数。
 
 8. **Softmax**:
-   \[ \text{Softmax}(\mathbf{x}_i) = \frac{e^{x_i}}{\sum_{j} e^{x_j}} \]
+   $$ \text{Softmax}(\mathbf{x}_i) = \frac{e^{x_i}}{\sum_{j} e^{x_j}} $$
    用于多分类问题，将一个向量转换为概率分布。
 
 9. **Swish**:
-   \[ \text{Swish}(x) = x \cdot \sigma(\beta x) \]
+   $$ \text{Swish}(x) = x \cdot \sigma(\beta x) $$
    一种自门控的激活函数，其中β是可学习的参数。
 
 10. **GELU (Gaussian Error Linear Unit)**:
-    \[ \text{GELU}(x) = x \Phi(x) \]
+    $$ [ \text{GELU}(x) = x \Phi(x) $$
     其中Φ是标准正态分布的累积分布函数。
 
-这些激活函数各有特点，适用于不同的场景和网络结构。选择正确的激活函数可以显著影响模型的性能和训练效率。
+
