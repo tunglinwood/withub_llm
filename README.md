@@ -33,9 +33,9 @@
    Sigmoid函数将输入压缩到0和1之间，通常用于二分类问题。
 
 2. **Tanh (Hyperbolic Tangent)**:
-   
+
    $$ \tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}} $$
-   
+
    双曲正切函数将输入压缩到-1和1之间。
 
 3. **ReLU (Rectified Linear Unit)**:
